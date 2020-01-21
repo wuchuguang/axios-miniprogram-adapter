@@ -1,5 +1,6 @@
 import { AxiosRequestConfig, AxiosPromise } from 'axios'
 import utils from 'axios/lib/utils'
+var buildFullPath = require('axios/lib/core/buildFullPath');
 import settle from 'axios/lib/core/settle'
 import buildURL from 'axios/lib/helpers/buildURL'
 import encode from './utils/encoder'
@@ -19,12 +20,13 @@ export default function mpAdapter (config: AxiosRequestConfig) :AxiosPromise {
     let requestTask: void | requestTask
     let requestData = config.data
     let requestHeaders = config.headers
+    var fullPath = buildFullPath(config.baseURL, config.url);
     // baidu miniprogram only support upperCase
     let requestMethod = (config.method && config.method.toUpperCase()) || 'GET'
     // miniprogram network request config
     const mpRequestOption: NetworkRequestOpts = {
       method: requestMethod as NetworkRequestMethod,
-      url: buildURL(config.url, config.params, config.paramsSerializer),
+      url: buildURL(fullPath, config.params, config.paramsSerializer),
       // Listen for success
       success: (mpResponse: NetworkRequestRes) => {
         const response = transformResponse(mpResponse, config, mpRequestOption)
