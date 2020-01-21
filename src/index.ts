@@ -34,6 +34,7 @@ export default function mpAdapter (config: AxiosRequestConfig) :AxiosPromise {
       },
       // Handle request Exception
       fail: (error) => {
+        console.error(`fail `, error);
         transformError(error, reject, config)
       },
       complete () {
