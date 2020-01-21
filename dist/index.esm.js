@@ -154,7 +154,7 @@ function mpAdapter(config) {
             },
             // Handle request Exception
             fail: function (error) {
-                console.error("fail ", error);
+                console.error("fail ", error, config);
                 transformError(error, reject, config);
             },
             complete: function () {
